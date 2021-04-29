@@ -29,5 +29,30 @@
             priority="1">
       </listener>
    </extension>
+   <extension
+         id="com.sts.callout.CalloutOderline"
+         name="com.sts.callout.CalloutOderline"
+         point="org.adempiere.base.IColumnCallout">
+      <callout
+            class="com.sts.callout.CalloutOderline"
+            columnName="QtyOrdered"
+            priority="1"
+            tableName="C_OrderLine">
+      </callout>
+      <callout
+            class="com.sts.callout.CalloutOderline"
+            columnName="PriceList"
+            priority="1"
+            tableName="C_OrderLine">
+      </callout>
+   </extension>
+   <extension
+         id="id1"
+         point="org.adempiere.base.Process">
+      <process
+            class="com.sts.process.ProcessOrder"
+            priority="1">
+      </process>
+   </extension>
 
 </plugin>

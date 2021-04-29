@@ -6,8 +6,10 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: STS
 Automatic-Module-Name: com.sts.module.STSBomPlugin
 Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-ActivationPolicy: lazy
 Require-Bundle: org.adempiere.plugin.utils;bundle-version="8.1.0",
  org.adempiere.base;bundle-version="8.1.0"
 Export-Package: com.sts.callout,
  com.sts.process
-Import-Package: org.compiere.model
+Service-Component: OSGI-INF/ProcessFactory.xml,
+
