@@ -10,6 +10,6 @@ Bundle-ActivationPolicy: lazy
 Require-Bundle: org.adempiere.plugin.utils;bundle-version="8.1.0",
  org.adempiere.base;bundle-version="8.1.0"
 Export-Package: com.sts.callout,
+ com.sts.module.STSBomPlugin,
  com.sts.process
-Service-Component: OSGI-INF/ProcessFactory.xml,
-
+Service-Component: OSGI-INF/ProcessFactory.xml,OSGI-INF/ModelFactory.xml,OSGI-INF/CalloutFactory.xml
