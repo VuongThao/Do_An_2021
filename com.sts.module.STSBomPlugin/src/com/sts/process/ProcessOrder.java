@@ -33,6 +33,7 @@ public class ProcessOrder extends SvrProcess {
 	@Override
 	protected String doIt() throws Exception {
 		MOrder_New mo = new MOrder_New(getCtx(), Order_ID, get_TrxName());
+		log.warning("cung xem id nhe:"+Order_ID);
 		switch (mo.getDocStatus()) {
 		case X_C_Order.DOCSTATUS_Drafted: {
 			mo.setDocStatus(X_C_Order.DOCSTATUS_Approved);

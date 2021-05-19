@@ -5,7 +5,8 @@ import java.util.List;
 
 import org.adempiere.base.IColumnCallout;
 import org.adempiere.base.IColumnCalloutFactory;
-import org.compiere.model.MOrder;
+import org.compiere.model.MInvoiceLine;
+//import org.compiere.model.MOrder;
 import org.compiere.model.MOrderLine;
 import org.compiere.util.CLogger;
 
@@ -16,9 +17,18 @@ public class CalloutFactory implements IColumnCalloutFactory {
 		// TODO Auto-generated method stub
 		log.warning("chay callout");
 		List<IColumnCallout> list = new  ArrayList<IColumnCallout>();
-		if(tableName.equals(MOrderLine.Table_Name)&& columnName.equals(MOrderLine.COLUMNNAME_QtyOrdered))
+		if(tableName.equals(MOrderLine.Table_Name)&& columnName.equals(MOrderLine.COLUMNNAME_QtyOrdered)) {
 			list.add(new CalloutOderline());
+		
+		}
+		if(tableName.equals(MInvoiceLine.Table_Name)&&columnName.equals(MInvoiceLine.COLUMNNAME_C_OrderLine_ID)) {
+			list.add(new CalloutInvoice());
+			
+			
+		}
 		return list !=null ? list.toArray(new IColumnCallout[0]): new IColumnCallout[0];
-	}
+		
+	
 
+}
 }
