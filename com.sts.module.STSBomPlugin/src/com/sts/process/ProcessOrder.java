@@ -16,6 +16,7 @@ public class ProcessOrder extends SvrProcess {
 
 	@Override
 	protected void prepare() {
+		log.warning("Ngày 31/5/2021");
 		// TODO Auto-generated method stub
 		ProcessInfoParameter[] para = getParameter();
 		for (int i = 0; i < para.length; i++) {
@@ -37,12 +38,11 @@ public class ProcessOrder extends SvrProcess {
 		switch (mo.getDocStatus()) {
 		case X_C_Order.DOCSTATUS_Drafted: {
 			mo.setDocStatus(X_C_Order.DOCSTATUS_Approved);
-			
 			break;
 		}
 		case X_C_Order.DOCSTATUS_Approved: {
 			mo.setDocStatus(X_C_Order.DOCSTATUS_Completed);
-		//	mo.setProcessed(true);
+		
 			break;
 		}
 		}

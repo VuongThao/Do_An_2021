@@ -827,6 +827,7 @@ public class MPayment extends X_C_Payment
 		{
 			MClientInfo info = MClientInfo.get(getCtx(), getAD_Client_ID(), get_TrxName()); 
 			MAcctSchema as = MAcctSchema.get (getCtx(), info.getC_AcctSchema1_ID(), get_TrxName());
+			log.warning("complete : payment :"+as.getC_Currency_ID());
 			if (as.getC_Currency_ID() != getC_Currency_ID())
 			{
 				if (isOverrideCurrencyRate())
@@ -1100,6 +1101,7 @@ public class MPayment extends X_C_Payment
 			if (m_mBankAccountProcessors == null || m_mBankAccountProcessors.length == 0)
 				m_mBankAccountProcessors = MBankAccountProcessor.find(getCtx (), null, null, 
 					getAD_Client_ID (), getC_Currency_ID (), amt, get_TrxName());
+			log.warning("tiep tuc chay den day :"+getC_Currency_ID ());
 			//
 			HashMap<String,ValueNamePair> map = new HashMap<String,ValueNamePair>(); //	to eliminate duplicates
 			for (int i = 0; i < m_mBankAccountProcessors.length; i++)
@@ -2376,7 +2378,11 @@ public class MPayment extends X_C_Payment
 		BigDecimal allocationAmt = getPayAmt();			//	underpayment
 		if (getOverUnderAmt().signum() < 0 && getPayAmt().signum() > 0)
 			allocationAmt = allocationAmt.add(getOverUnderAmt());	//	overpayment (negative)
-
+      
+		/////
+		
+		
+		log.warning("kiemtra"+getC_Currency_ID());
 		MAllocationHdr alloc = new MAllocationHdr(getCtx(), false, 
 			getDateTrx(), getC_Currency_ID(),
 			Msg.translate(getCtx(), "C_Payment_ID") + ": " + getDocumentNo() + " [1]", get_TrxName());

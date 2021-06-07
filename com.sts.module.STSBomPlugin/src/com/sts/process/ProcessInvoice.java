@@ -37,8 +37,8 @@ public class ProcessInvoice extends SvrProcess{
 	protected String doIt() throws Exception {
 	  MInvoice mi= new MInvoice(getCtx(), Invoice_ID, get_TrxName());
 		// TODO Auto-generated method stub
-	  log.warning("se co id:"+Invoice_ID);
-	  log.warning("process"+mi.getDocStatus());
+//	  log.warning("se co id:"+Invoice_ID);
+//	  log.warning("process"+mi.getDocStatus());
 	  switch (mi.getDocStatus()) {
 	  case X_C_Invoice.DOCSTATUS_Drafted:{
 		  mi.setDocStatus(X_C_Invoice.DOCSTATUS_Approved);
@@ -46,6 +46,7 @@ public class ProcessInvoice extends SvrProcess{
 	  }
 	  case X_C_Invoice.DOCSTATUS_Approved:{
 		  mi.setDocStatus(X_C_Invoice.DOCSTATUS_Completed);
+     	 // mi.setProcessed(false);
 		  break;
 	  }
 	  }

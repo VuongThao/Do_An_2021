@@ -13,8 +13,7 @@ public class CalloutOderline implements IColumnCallout{
 
 	@Override
 	public String start(Properties ctx, int WindowNo, GridTab mTab, GridField mField, Object value, Object oldValue) {
-		log.warning("den day");
-	
+		
 		
 		
 		// TODO Auto-generated method stub

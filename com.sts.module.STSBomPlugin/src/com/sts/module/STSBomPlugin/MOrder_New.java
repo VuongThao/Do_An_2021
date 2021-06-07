@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
+//import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,7 +49,24 @@ public class MOrder_New extends MOrder{
 	private String		m_processMsg = null;
 	private BigDecimal myAmount = Env.ZERO;	
 	
-
+    public static final String COLUMNNAME_Crm_Quote_ID = "Crm_Quote_ID";
+//	public void setCrm_Quote_ID (int Crm_Quote_ID)
+//	{
+//		if (Crm_Quote_ID < 1) 
+//			set_ValueNoCheck (COLUMNNAME_Crm_Quote_ID, null);
+//		else 
+//			set_ValueNoCheck (COLUMNNAME_Crm_Quote_ID, Integer.valueOf(Crm_Quote_ID));
+//	}
+//	
+	/** Get Crm_Quote.
+		@return Crm_Quote	  */
+//	public int getCrm_Quote_ID () 
+//	{
+//		Integer ii = (Integer)get_Value(COLUMNNAME_Crm_Quote_ID);
+//		if (ii == null)
+//			 return 0;
+//		return ii.intValue();
+//	}
 	public MOrder_New(Properties ctx, int C_Payment_ID, String trxName) {
 		super(ctx, C_Payment_ID, trxName);
 	}
@@ -60,7 +77,7 @@ public class MOrder_New extends MOrder{
 		log.warning("before save");
 		if(newRecord)
 		{	
-			//setDescription("New By " + (new MUser(Env.getCtx(),Env.getAD_User_ID(Env.getCtx()),null)).getName());
+			
 		}
 		return super.beforeSave(newRecord);
 	}
@@ -68,48 +85,46 @@ public class MOrder_New extends MOrder{
 		log.warning("after save");
 		if (!success)
 		{
-		//	log.warning("after save");
+		
 			return false;
 		}
-//		myAmount = getGrandTotal();
+		//myAmount = getGrandTotal();
 //		/*tampt add de cap nhat so du cong no khach hang va tai xe*/
-//		if (is_ValueChanged("DocStatus") && getDocStatus().equals("CO"))
-//		{
+		if (is_ValueChanged("DocStatus") && getDocStatus().equals("CO"))
+		{
 //			//DienNN added on Jul 05, 2019
 //			int myQuoteID = getCrm_Quote_ID();
 //			int aduser_ID = getAD_User_ID();
-//			String sql = "select grandtotal from crm_quote where docstatus = 'IP' and crm_quote_id = " + myQuoteID;
-//			System.out.println("sql: "+sql);
-//			BigDecimal myQuoteAmt = DB.getSQLValueBD(get_TrxName(), sql);
-//			if (myQuoteAmt == null){
-//				myQuoteAmt= Env.ZERO;
-//			}
-//			else{
-//				sql = "update crm_quote set docstatus = 'CO', updated = sysdate, updatedby = " + aduser_ID + " where crm_quote_id = " + myQuoteID;
-//				System.out.println("sql: "+sql);
-//				int no = DB.executeUpdateEx(sql, get_TrxName());
-//			}
-			//update BP
-//			BigDecimal grandTotal = getGrandTotal().subtract(myQuoteAmt);
-//			int cpartner_ID = getC_BPartner_ID();
+			int C_Order_ID=getC_Order_ID();
+			String sql = "select grandtotal from c_order where c_order_id = " + C_Order_ID;
+     		System.out.println("sql: "+sql);
+
+//			//update BP
+			BigDecimal grandTotal = getGrandTotal();
+			int cpartner_ID = getC_BPartner_ID();
 //			
-//			MBPartner myBP = new MBPartner(getCtx(),cpartner_ID,get_TrxName());
-//			BigDecimal creditUsed = Env.ZERO;
-//			BigDecimal creditAvailable = Env.ZERO;
-//			creditUsed = myBP.getSO_CreditUsed().add(grandTotal);
-//			creditAvailable = myBP.getSO_CreditLimit().subtract(creditUsed);
-//			myBP.setSO_CreditUsed(creditUsed);
-//			//myBP.setAvailable_Credit(creditAvailable);
-//			myBP.saveEx(get_TrxName());
+			MBPartner myBP = new MBPartner(getCtx(),cpartner_ID,get_TrxName());
+			BigDecimal creditUsed = Env.ZERO;
+			BigDecimal creditAvailable = Env.ZERO;
+			creditUsed = myBP.getSO_CreditUsed().add(grandTotal);
+			log.warning(" exxx11 hien ra man hinh"+creditUsed);
+			creditAvailable = myBP.getSO_CreditLimit().subtract(creditUsed);
+			log.warning("creditAvailable"+creditAvailable);
+			myBP.setSO_CreditUsed(creditUsed);
+		//	myBP.setSO(creditAvailable);
+			myBP.saveEx(get_TrxName());
+//			
+		//update contract
+     		MOrder_New mo = new MOrder_New(getCtx(), getC_Order_ID(), get_TrxName());
+     		MHRContract mhr = new MHRContract(getCtx(), mo.get_ValueAsInt("HR_Contract_ID"), get_TrxName());
+			creditUsed = mhr.getso_credituser().add(grandTotal);
+			creditAvailable = mhr.getlimit_credit().subtract(creditUsed);
+			mhr.setso_credituser(creditUsed);
+			log.warning("setso_credituser"+creditUsed);
+			mhr.setavailable_credit(creditAvailable);
+			log.warning(" set _creditAvailable"+creditAvailable);
+			mhr.saveEx(get_TrxName());
 			
-			//update contract
-//			MHRContract myContract = new MHRContract(getCtx(),getHR_Contract_ID(),get_TrxName());
-//			creditUsed = myContract.getSO_CreditUsed().add(getGrandTotal());//Do luc lam yeu cau khong xac dinh duoc ORG
-//			creditAvailable = myContract.getLimit_Credit().subtract(creditUsed);
-//			myContract.setSO_CreditUsed(creditUsed);
-//			myContract.setAvailable_Credit(creditAvailable);
-//			myContract.saveEx(get_TrxName());
-//			
 //			//cap nhat han muc cong no tai xe
 //			MUser myDriver = new MUser(getCtx(),getAD_User_ID(),get_TrxName());
 //			int driveUsed = 0;
@@ -220,8 +235,11 @@ public class MOrder_New extends MOrder{
 			}
 
 		}
+		}
 		return super.afterSave(newRecord,success);
 	}
+		
+	
 	
 	//send email to contract manage
 	private Boolean sendIndividualMail (int p_order_id) 
