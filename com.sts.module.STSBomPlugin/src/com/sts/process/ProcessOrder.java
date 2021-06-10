@@ -42,6 +42,7 @@ public class ProcessOrder extends SvrProcess {
 		}
 		case X_C_Order.DOCSTATUS_Approved: {
 			mo.setDocStatus(X_C_Order.DOCSTATUS_Completed);
+			//mo.setProcessed(true);
 		
 			break;
 		}

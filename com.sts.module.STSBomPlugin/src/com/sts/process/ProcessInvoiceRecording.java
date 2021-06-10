@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import org.compiere.model.MInvoice;
 import org.compiere.model.MInvoiceLine;
 import org.compiere.model.MOrderLine;
+import org.compiere.model.X_C_Order;
 import org.compiere.process.ProcessInfoParameter;
 import org.compiere.process.SvrProcess;
 import org.compiere.util.CLogger;
@@ -53,9 +54,30 @@ public class ProcessInvoiceRecording extends SvrProcess {
 		
 		mI.setM_PriceList_ID(1000000);
 		mI.setGrandTotal(mo.getGrandTotal());
+		log.warning("an hien nut"+mo.getInvoiceRule());
+		
+//		switch(mo.getInvoiceRule()) {
+//		case X_C_Order.INVOICERULE_AfterDelivery:{
+//		   mo.setInvoiceRule(X_C_Order.INVOICERULE_AfterOrderDelivered);
+//		   break;
+//		   
+//		}
+//		case X_C_Order.INVOICERULE_AfterOrderDelivered:{
+//			mo.setProcessed(true);
+//			break;
+//		}
+//		}
 		if(!mI.save()) {
 			return null;
+			
+			
+		
 		}
+		mo.setProcessed(true);
+		if(!mo.save()) {
+			return null;
+		}
+	
 //		MOrderLine mol = new MOrderLine(getCtx(), p_Order_ID, get_TrxName());
 //		MInvoiceLine miv= new MInvoiceLine(getCtx(),0,get_TrxName());
 //		miv.setC_OrderLine_ID(mol.getC_OrderLine_ID());

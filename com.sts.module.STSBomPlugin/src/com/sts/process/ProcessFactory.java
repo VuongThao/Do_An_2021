@@ -15,6 +15,8 @@ public class ProcessFactory implements IProcessFactory {
 			return new ProcessInvoice();
 		if("com.sts.process.ProcessInvoiceRecording".equals(className))
 			return new ProcessInvoiceRecording();
+//		if("com.sts.process.ProcessButtonInvoice".equals(className))
+//			return new ProcessButtonInvoice();
 		
 		
 		return null;

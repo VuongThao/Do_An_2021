@@ -58,6 +58,7 @@ public class Mpayment_New extends MPayment {
 			BigDecimal creditUsed = Env.ZERO;
 			BigDecimal creditAvailable = Env.ZERO;
 			log.warning("payment tinh toan:payment"+payamt);
+			log.warning("tinh so tien con lai:6/10/2021"+myBP.getSO_CreditUsed());
 			creditUsed = myBP.getSO_CreditUsed().subtract(payamt);
 			//myBP.setSO_CreditUsed(Math.abs(creditUsed));
 			log.warning("hien ra man hinh abc"+creditUsed);

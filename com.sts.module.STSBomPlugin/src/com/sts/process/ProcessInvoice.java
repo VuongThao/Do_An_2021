@@ -46,7 +46,7 @@ public class ProcessInvoice extends SvrProcess{
 	  }
 	  case X_C_Invoice.DOCSTATUS_Approved:{
 		  mi.setDocStatus(X_C_Invoice.DOCSTATUS_Completed);
-     	 // mi.setProcessed(false);
+     	  mi.setProcessed(true);
 		  break;
 	  }
 	  }
